@@ -37,76 +37,82 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final authCubit = context.read<AuthCubit>();
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.lock_open_outlined,
-                size: 80,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              const Gap(50),
-              Text(
-                "Let's create an account for you",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              const Gap(25),
-              CustomTextField(
-                  controller: _nameController,
-                  hintText: "Name",
-                  isObscure: false),
-              const Gap(10),
-              CustomTextField(
-                  controller: _emailController,
-                  hintText: "Email",
-                  isObscure: false),
-              const Gap(10),
-              CustomTextField(
-                  controller: _passwordController,
-                  hintText: "Password",
-                  isObscure: true),
-              const Gap(10),
-              CustomTextField(
-                  controller: _confirmPasswordController,
-                  hintText: "Confirm Password",
-                  isObscure: true),
-              const Gap(25),
-              CustomButtonWidget(
-                functionName: "Register",
-                function: () => authCubit.register(
-                    _nameController.text,
-                    _emailController.text,
-                    _passwordController.text,
-                    _confirmPasswordController.text,
-                    context),
-              ),
-              const Gap(50),
-              GestureDetector(
-                onTap: widget.toggleScreens,
-                child: RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: 'Already a member? ',
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary)),
-                      TextSpan(
-                          text: 'Login Now',
-                          style: TextStyle(
-                              color:
-                                  Theme.of(context).colorScheme.inversePrimary,
-                              fontWeight: FontWeight.bold)),
-                    ],
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.lock_open_outlined,
+                    size: 80,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
-                ),
-              )
-            ],
+                  const Gap(50),
+                  Text(
+                    "Let's create an account for you",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  const Gap(25),
+                  CustomTextField(
+                      controller: _nameController,
+                      hintText: "Name",
+                      isObscure: false),
+                  const Gap(10),
+                  CustomTextField(
+                      controller: _emailController,
+                      hintText: "Email",
+                      isObscure: false),
+                  const Gap(10),
+                  CustomTextField(
+                      controller: _passwordController,
+                      hintText: "Password",
+                      isObscure: true),
+                  const Gap(10),
+                  CustomTextField(
+                      controller: _confirmPasswordController,
+                      hintText: "Confirm Password",
+                      isObscure: true),
+                  const Gap(25),
+                  CustomButtonWidget(
+                    functionName: "Register",
+                    function: () => authCubit.register(
+                        _nameController.text,
+                        _emailController.text,
+                        _passwordController.text,
+                        _confirmPasswordController.text,
+                        context),
+                  ),
+                  const Gap(50),
+                  GestureDetector(
+                    onTap: widget.toggleScreens,
+                    child: RichText(
+                      text: TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: 'Already a member? ',
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.primary)),
+                          TextSpan(
+                              text: 'Login Now',
+                              style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .inversePrimary,
+                                  fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
         ),
       ),

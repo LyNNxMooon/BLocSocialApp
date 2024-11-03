@@ -1,13 +1,16 @@
+import 'package:bloc_social_app/BLoc/cubits/auth/auth_cubit.dart';
 import 'package:bloc_social_app/screens/profile_screen.dart';
 import 'package:bloc_social_app/utils/navigation_extension.dart';
 import 'package:bloc_social_app/widgets/drawer_tile_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomDrawerWidget extends StatelessWidget {
   const CustomDrawerWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final authCubit = context.read<AuthCubit>();
     return Drawer(
       backgroundColor: Theme.of(context).colorScheme.surface,
       child: SafeArea(
@@ -36,7 +39,9 @@ class CustomDrawerWidget extends StatelessWidget {
                 icon: Icons.person,
                 function: () {
                   context.navigateBack();
-                  context.navigateToNext(const ProfileScreen());
+                  context.navigateToNext(ProfileScreen(
+                    userID: authCubit.currentUser?.uid ?? "",
+                  ));
                 },
               ),
               CustomDrawerTileWidget(
@@ -53,7 +58,7 @@ class CustomDrawerWidget extends StatelessWidget {
               CustomDrawerTileWidget(
                 title: "L O G O U T",
                 icon: Icons.logout,
-                function: () {},
+                function: () => authCubit.logout(),
               )
             ],
           ),

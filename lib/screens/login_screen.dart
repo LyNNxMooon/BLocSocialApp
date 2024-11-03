@@ -31,62 +31,67 @@ class _LoginScreenState extends State<LoginScreen> {
     final authCubit = context.read<AuthCubit>();
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.lock_open_outlined,
-                size: 80,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              const Gap(50),
-              Text(
-                "Welcome back. You've been missed!",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              const Gap(25),
-              CustomTextField(
-                  controller: _emailController,
-                  hintText: "Email",
-                  isObscure: false),
-              const Gap(10),
-              CustomTextField(
-                  controller: _passwordController,
-                  hintText: "Password",
-                  isObscure: true),
-              const Gap(25),
-              CustomButtonWidget(
-                functionName: "Login",
-                function: () => authCubit.login(
-                    _emailController.text, _passwordController.text, context),
-              ),
-              const Gap(50),
-              GestureDetector(
-                onTap: widget.toggleScreens,
-                child: RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: 'Not a member? ',
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary)),
-                      TextSpan(
-                          text: 'Register Now',
-                          style: TextStyle(
-                              color:
-                                  Theme.of(context).colorScheme.inversePrimary,
-                              fontWeight: FontWeight.bold)),
-                    ],
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.lock_open_outlined,
+                    size: 80,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
-                ),
-              )
-            ],
+                  const Gap(50),
+                  Text(
+                    "Welcome back. You've been missed!",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  const Gap(25),
+                  CustomTextField(
+                      controller: _emailController,
+                      hintText: "Email",
+                      isObscure: false),
+                  const Gap(10),
+                  CustomTextField(
+                      controller: _passwordController,
+                      hintText: "Password",
+                      isObscure: true),
+                  const Gap(25),
+                  CustomButtonWidget(
+                    functionName: "Login",
+                    function: () => authCubit.login(_emailController.text,
+                        _passwordController.text, context),
+                  ),
+                  const Gap(50),
+                  GestureDetector(
+                    onTap: widget.toggleScreens,
+                    child: RichText(
+                      text: TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: 'Not a member? ',
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.primary)),
+                          TextSpan(
+                              text: 'Register Now',
+                              style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .inversePrimary,
+                                  fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
         ),
       ),

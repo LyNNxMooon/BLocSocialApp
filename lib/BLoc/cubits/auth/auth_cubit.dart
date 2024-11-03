@@ -22,6 +22,8 @@ class AuthCubit extends Cubit<AuthStates> {
     }
   }
 
+  //Get current User
+
   AppUserVO? get currentUser => _currentUser;
 
   //login user

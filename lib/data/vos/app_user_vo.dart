@@ -6,8 +6,13 @@ class AppUserVO {
   final String uid;
   final String email;
   final String name;
+  final String bio;
 
-  AppUserVO({required this.uid, required this.email, required this.name});
+  AppUserVO(
+      {required this.uid,
+      required this.email,
+      required this.name,
+      required this.bio});
 
   factory AppUserVO.fromJson(Map<String, dynamic> json) =>
       _$AppUserVOFromJson(json);

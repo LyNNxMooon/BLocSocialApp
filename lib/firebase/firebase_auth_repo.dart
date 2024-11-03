@@ -7,6 +7,8 @@ class FirebaseAuthRepo implements AuthRepo {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final databaseRef = FirebaseDatabase.instance.ref();
 
+  //get current user
+
   @override
   Future<AppUserVO?> getCurrentUser() async {
     final currentUser = _firebaseAuth.currentUser;
@@ -16,8 +18,13 @@ class FirebaseAuthRepo implements AuthRepo {
     }
 
     return AppUserVO(
-        uid: currentUser.uid, email: currentUser.email ?? "", name: "");
+        uid: currentUser.uid,
+        email: currentUser.email ?? "",
+        name: "",
+        bio: "");
   }
+
+  // login user
 
   @override
   Future<AppUserVO?> loginWithEmailAndPassword(
@@ -27,7 +34,7 @@ class FirebaseAuthRepo implements AuthRepo {
           .signInWithEmailAndPassword(email: email, password: password);
 
       AppUserVO user = AppUserVO(
-          uid: userCredential.user?.uid ?? "", email: email, name: "");
+          uid: userCredential.user?.uid ?? "", email: email, name: "", bio: "");
 
       return user;
     } catch (error) {
@@ -35,10 +42,14 @@ class FirebaseAuthRepo implements AuthRepo {
     }
   }
 
+  //logout user
+
   @override
   Future<void> logout() async {
     await _firebaseAuth.signOut();
   }
+
+  //Register User
 
   @override
   Future<AppUserVO?> registerAppUser(
@@ -48,7 +59,10 @@ class FirebaseAuthRepo implements AuthRepo {
           .createUserWithEmailAndPassword(email: email, password: password);
 
       AppUserVO user = AppUserVO(
-          uid: userCredential.user?.uid ?? "", email: email, name: name);
+          uid: userCredential.user?.uid ?? "",
+          email: email,
+          name: name,
+          bio: "");
 
       await databaseRef.child("users").child(user.uid).set(user.toJson());
 
