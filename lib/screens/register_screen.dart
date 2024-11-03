@@ -5,24 +5,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
-class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key, required this.toggleScreens});
+class RegisterScreen extends StatefulWidget {
+  RegisterScreen({super.key, required this.toggleScreens});
 
   final void Function()? toggleScreens;
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final _emailController = TextEditingController();
 
   final _passwordController = TextEditingController();
 
+  final _nameController = TextEditingController();
+
+  final _confirmPasswordController = TextEditingController();
+
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -44,13 +50,18 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const Gap(50),
               Text(
-                "Welcome back. You've been missed!",
+                "Let's create an account for you",
                 style: TextStyle(
                   fontSize: 16,
                   color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               const Gap(25),
+              CustomTextField(
+                  controller: _nameController,
+                  hintText: "Name",
+                  isObscure: false),
+              const Gap(10),
               CustomTextField(
                   controller: _emailController,
                   hintText: "Email",
@@ -60,11 +71,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: _passwordController,
                   hintText: "Password",
                   isObscure: true),
+              const Gap(10),
+              CustomTextField(
+                  controller: _confirmPasswordController,
+                  hintText: "Confirm Password",
+                  isObscure: true),
               const Gap(25),
               CustomButtonWidget(
-                functionName: "Login",
-                function: () => authCubit.login(
-                    _emailController.text, _passwordController.text, context),
+                functionName: "Register",
+                function: () => authCubit.register(
+                    _nameController.text,
+                    _emailController.text,
+                    _passwordController.text,
+                    _confirmPasswordController.text,
+                    context),
               ),
               const Gap(50),
               GestureDetector(
@@ -73,11 +93,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   text: TextSpan(
                     children: <TextSpan>[
                       TextSpan(
-                          text: 'Not a member? ',
+                          text: 'Already a member? ',
                           style: TextStyle(
                               color: Theme.of(context).colorScheme.primary)),
                       TextSpan(
-                          text: 'Register Now',
+                          text: 'Login Now',
                           style: TextStyle(
                               color:
                                   Theme.of(context).colorScheme.inversePrimary,

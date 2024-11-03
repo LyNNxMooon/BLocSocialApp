@@ -1,9 +1,11 @@
 import 'package:bloc_social_app/data/vos/app_user_vo.dart';
 import 'package:bloc_social_app/domain/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class FirebaseAuthRepo implements AuthRepo {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final databaseRef = FirebaseDatabase.instance.ref();
 
   @override
   Future<AppUserVO?> getCurrentUser() async {
@@ -47,6 +49,8 @@ class FirebaseAuthRepo implements AuthRepo {
 
       AppUserVO user = AppUserVO(
           uid: userCredential.user?.uid ?? "", email: email, name: name);
+
+      await databaseRef.child("users").child(user.uid).set(user.toJson());
 
       return user;
     } catch (error) {
