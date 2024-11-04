@@ -70,11 +70,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       isObscure: false),
                   const Gap(10),
                   CustomTextField(
+                      minLines: 1,
+                      maxLines: 1,
                       controller: _passwordController,
                       hintText: "Password",
                       isObscure: true),
                   const Gap(10),
                   CustomTextField(
+                      minLines: 1,
+                      maxLines: 1,
                       controller: _confirmPasswordController,
                       hintText: "Confirm Password",
                       isObscure: true),

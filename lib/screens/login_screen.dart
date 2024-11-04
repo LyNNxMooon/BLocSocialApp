@@ -58,6 +58,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       isObscure: false),
                   const Gap(10),
                   CustomTextField(
+                      minLines: 1,
+                      maxLines: 1,
                       controller: _passwordController,
                       hintText: "Password",
                       isObscure: true),
