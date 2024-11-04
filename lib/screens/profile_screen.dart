@@ -1,11 +1,11 @@
 import 'package:bloc_social_app/BLoc/cubits/profile/profile_cubit.dart';
 import 'package:bloc_social_app/BLoc/cubits/profile/profile_states.dart';
-import 'package:bloc_social_app/constants/images.dart';
+
 import 'package:bloc_social_app/screens/edit_profile_screen.dart';
 import 'package:bloc_social_app/utils/navigation_extension.dart';
 import 'package:bloc_social_app/widgets/loading_widget.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:bloc_social_app/widgets/profile_image_widget.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -76,23 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             style: TextStyle(color: Theme.of(context).colorScheme.primary),
           ),
           const Gap(25),
-          CachedNetworkImage(
-            imageUrl: kProfileURL,
-            placeholder: (context, url) => const CupertinoActivityIndicator(),
-            errorWidget: (context, url, error) => Icon(
-              Icons.person,
-              size: 60,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            imageBuilder: (context, imageProvider) => Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image:
-                      DecorationImage(image: imageProvider, fit: BoxFit.cover)),
-            ),
-          ),
+          ProfileImageWidget(),
           const Gap(25),
           Padding(
             padding: const EdgeInsets.only(left: 25),

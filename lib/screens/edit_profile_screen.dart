@@ -3,6 +3,7 @@ import 'package:bloc_social_app/BLoc/cubits/profile/profile_states.dart';
 import 'package:bloc_social_app/data/vos/app_user_vo.dart';
 import 'package:bloc_social_app/utils/navigation_extension.dart';
 import 'package:bloc_social_app/widgets/loading_widget.dart';
+import 'package:bloc_social_app/widgets/profile_image_widget.dart';
 import 'package:bloc_social_app/widgets/text_field_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -67,9 +68,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
           child: Column(
             children: [
+              ProfileImageWidget(),
+              const Gap(25),
               const Text("Bio"),
               const Gap(10),
               CustomTextField(
