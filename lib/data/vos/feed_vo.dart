@@ -8,6 +8,8 @@ class FeedVO {
   final String userUID;
   @JsonKey(name: 'user_name')
   final String userName;
+  @JsonKey(name: 'user_profile_image')
+  final String userProfileImage;
   final String feed;
   final DateTime timestamp;
 
@@ -15,6 +17,7 @@ class FeedVO {
       {required this.id,
       required this.userUID,
       required this.userName,
+      required this.userProfileImage,
       required this.feed,
       required this.timestamp});
 

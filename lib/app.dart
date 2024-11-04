@@ -1,6 +1,8 @@
 import 'package:bloc_social_app/BLoc/cubits/auth/auth_cubit.dart';
 import 'package:bloc_social_app/BLoc/cubits/auth/auth_states.dart';
+import 'package:bloc_social_app/BLoc/cubits/feeds/feed_cubit.dart';
 import 'package:bloc_social_app/BLoc/cubits/profile/profile_cubit.dart';
+import 'package:bloc_social_app/firebase/firebase_feed_repo.dart';
 import 'package:bloc_social_app/firebase/firebase_profile_repo.dart';
 import 'package:bloc_social_app/themes/light_mode.dart';
 import 'package:bloc_social_app/firebase/firebase_auth_repo.dart';
@@ -16,6 +18,7 @@ class MyApp extends StatelessWidget {
 
   final authRepo = FirebaseAuthRepo();
   final profileRepo = FirebaseProfileRepo();
+  final feedRepo = FirebaseFeedRepo();
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +29,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ProfileCubit>(
           create: (context) => ProfileCubit(profileRepo: profileRepo),
+        ),
+        BlocProvider<FeedCubit>(
+          create: (context) => FeedCubit(feedRepo: feedRepo),
         )
       ],
       child: MaterialApp(

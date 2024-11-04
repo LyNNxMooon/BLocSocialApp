@@ -5,15 +5,21 @@ class CustomTextField extends StatelessWidget {
       {super.key,
       required this.controller,
       required this.hintText,
-      required this.isObscure});
+      required this.isObscure,
+      this.minLines,
+      this.maxLines});
 
   final TextEditingController controller;
   final String hintText;
   final bool isObscure;
+  final int? minLines;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      minLines: minLines,
+      maxLines: maxLines,
       controller: controller,
       obscureText: isObscure,
       decoration: InputDecoration(
