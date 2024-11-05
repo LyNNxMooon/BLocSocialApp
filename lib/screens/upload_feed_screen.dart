@@ -1,12 +1,13 @@
-import 'package:bloc_social_app/BLoc/cubits/auth/auth_cubit.dart';
-import 'package:bloc_social_app/BLoc/cubits/feeds/feed_cubit.dart';
-import 'package:bloc_social_app/BLoc/cubits/feeds/feed_states.dart';
-import 'package:bloc_social_app/BLoc/cubits/profile/profile_cubit.dart';
-import 'package:bloc_social_app/BLoc/cubits/profile/profile_states.dart';
-import 'package:bloc_social_app/constants/images.dart';
+import 'package:bloc_social_app/BLoC/cubits/auth/auth_cubit.dart';
+import 'package:bloc_social_app/BLoC/cubits/feeds/feed_cubit.dart';
+import 'package:bloc_social_app/BLoC/cubits/feeds/feed_states.dart';
+import 'package:bloc_social_app/BLoC/cubits/profile/profile_cubit.dart';
+import 'package:bloc_social_app/BLoC/cubits/profile/profile_states.dart';
+
+import 'package:bloc_social_app/utils/navigation_extension.dart';
+import 'package:bloc_social_app/widgets/feed_avatar_widget.dart';
 import 'package:bloc_social_app/widgets/loading_widget.dart';
 import 'package:bloc_social_app/widgets/text_field_widget.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +53,24 @@ class _FeedUploadScreenState extends State<FeedUploadScreen> {
               foregroundColor: Theme.of(context).colorScheme.primary,
               centerTitle: true,
               title: Text("Create Feed"),
+              actions: [
+                SizedBox(
+                  width: 75,
+                  height: 30,
+                  child: ElevatedButton(
+                      onPressed: () => feedCubit.createNewFeed(
+                          authCubit.currentUser?.uid ?? "",
+                          authCubit.currentUser?.name ?? "",
+                          _feedBodyController.text,
+                          context),
+                      child: Text(
+                        "Post",
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                            fontSize: 12),
+                      )),
+                )
+              ],
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -71,7 +90,9 @@ class _FeedUploadScreenState extends State<FeedUploadScreen> {
           ),
         );
       },
-      listener: (context, feedState) {},
+      listener: (context, feedState) {
+        if (feedState is FeedsLoaded) context.navigateBack();
+      },
     );
   }
 
@@ -83,23 +104,7 @@ class _FeedUploadScreenState extends State<FeedUploadScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: Row(
               children: [
-                CachedNetworkImage(
-                  imageUrl: kProfileURL,
-                  placeholder: (context, url) =>
-                      const CupertinoActivityIndicator(),
-                  errorWidget: (context, url, error) => Icon(
-                    Icons.person,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  imageBuilder: (context, imageProvider) => Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            image: imageProvider, fit: BoxFit.cover)),
-                  ),
-                ),
+                FeedAvatarWidget(),
                 const Gap(10),
                 Text(
                   profileState.userProfile.name,

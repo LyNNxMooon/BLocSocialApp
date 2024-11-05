@@ -1,4 +1,4 @@
-import 'package:bloc_social_app/BLoc/cubits/feeds/feed_states.dart';
+import 'package:bloc_social_app/BLoC/cubits/feeds/feed_states.dart';
 import 'package:bloc_social_app/constants/images.dart';
 import 'package:bloc_social_app/data/vos/feed_vo.dart';
 import 'package:bloc_social_app/domain/feed_repository.dart';
@@ -12,7 +12,7 @@ class FeedCubit extends Cubit<FeedStates> {
 
   //Upload a new post
 
-  Future<void> CreateNewFeed(String userUID, String userName, String feedBody,
+  Future<void> createNewFeed(String userUID, String userName, String feedBody,
       BuildContext context) async {
     if (feedBody.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -55,6 +55,7 @@ class FeedCubit extends Cubit<FeedStates> {
   Future<void> deleteFeed(int feedId) async {
     try {
       feedRepo.deleteFeed(feedId);
+      await fetchAllFeeds();
     } catch (error) {}
   }
 }

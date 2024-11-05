@@ -1,4 +1,4 @@
-import 'package:bloc_social_app/BLoc/cubits/profile/profile_states.dart';
+import 'package:bloc_social_app/BLoC/cubits/profile/profile_states.dart';
 import 'package:bloc_social_app/data/vos/app_user_vo.dart';
 import 'package:bloc_social_app/domain/profile_repository.dart';
 import 'package:flutter/material.dart';

@@ -17,11 +17,15 @@ class FirebaseAuthRepo implements AuthRepo {
       return null;
     }
 
-    return AppUserVO(
-        uid: currentUser.uid,
-        email: currentUser.email ?? "",
-        name: "",
-        bio: "");
+    AppUserVO? user =
+        await databaseRef.child("users").child(currentUser.uid).once().then(
+      (event) {
+        final rawData = event.snapshot.value;
+        return AppUserVO.fromJson(Map<String, dynamic>.from(rawData as Map));
+      },
+    );
+
+    return user;
   }
 
   // login user
@@ -32,9 +36,16 @@ class FirebaseAuthRepo implements AuthRepo {
     try {
       UserCredential userCredential = await _firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
-
-      AppUserVO user = AppUserVO(
-          uid: userCredential.user?.uid ?? "", email: email, name: "", bio: "");
+      AppUserVO user = await databaseRef
+          .child("users")
+          .child(userCredential.user?.uid ?? "")
+          .once()
+          .then(
+        (event) {
+          final rawData = event.snapshot.value;
+          return AppUserVO.fromJson(Map<String, dynamic>.from(rawData as Map));
+        },
+      );
 
       return user;
     } catch (error) {

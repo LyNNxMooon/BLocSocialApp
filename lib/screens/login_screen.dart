@@ -1,4 +1,4 @@
-import 'package:bloc_social_app/BLoc/cubits/auth/auth_cubit.dart';
+import 'package:bloc_social_app/BLoC/cubits/auth/auth_cubit.dart';
 import 'package:bloc_social_app/widgets/button_widget.dart';
 import 'package:bloc_social_app/widgets/text_field_widget.dart';
 import 'package:flutter/material.dart';

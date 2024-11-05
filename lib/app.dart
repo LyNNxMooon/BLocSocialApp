@@ -1,7 +1,7 @@
-import 'package:bloc_social_app/BLoc/cubits/auth/auth_cubit.dart';
-import 'package:bloc_social_app/BLoc/cubits/auth/auth_states.dart';
-import 'package:bloc_social_app/BLoc/cubits/feeds/feed_cubit.dart';
-import 'package:bloc_social_app/BLoc/cubits/profile/profile_cubit.dart';
+import 'package:bloc_social_app/BLoC/cubits/auth/auth_cubit.dart';
+import 'package:bloc_social_app/BLoC/cubits/auth/auth_states.dart';
+import 'package:bloc_social_app/BLoC/cubits/feeds/feed_cubit.dart';
+import 'package:bloc_social_app/BLoC/cubits/profile/profile_cubit.dart';
 import 'package:bloc_social_app/firebase/firebase_feed_repo.dart';
 import 'package:bloc_social_app/firebase/firebase_profile_repo.dart';
 import 'package:bloc_social_app/themes/light_mode.dart';
@@ -9,7 +9,7 @@ import 'package:bloc_social_app/firebase/firebase_auth_repo.dart';
 import 'package:bloc_social_app/screens/auth_screen.dart';
 import 'package:bloc_social_app/screens/feed_screen.dart';
 import 'package:bloc_social_app/widgets/loading_widget.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

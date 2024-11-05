@@ -1,4 +1,4 @@
-import 'package:bloc_social_app/BLoc/cubits/auth/auth_states.dart';
+import 'package:bloc_social_app/BLoC/cubits/auth/auth_states.dart';
 import 'package:bloc_social_app/data/vos/app_user_vo.dart';
 import 'package:bloc_social_app/domain/auth_repository.dart';
 import 'package:flutter/material.dart';

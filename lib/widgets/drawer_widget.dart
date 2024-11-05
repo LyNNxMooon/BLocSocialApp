@@ -1,4 +1,4 @@
-import 'package:bloc_social_app/BLoc/cubits/auth/auth_cubit.dart';
+import 'package:bloc_social_app/BLoC/cubits/auth/auth_cubit.dart';
 import 'package:bloc_social_app/screens/profile_screen.dart';
 import 'package:bloc_social_app/utils/navigation_extension.dart';
 import 'package:bloc_social_app/widgets/drawer_tile_widget.dart';

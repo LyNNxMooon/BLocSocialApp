@@ -1,5 +1,5 @@
-import 'package:bloc_social_app/BLoc/cubits/profile/profile_cubit.dart';
-import 'package:bloc_social_app/BLoc/cubits/profile/profile_states.dart';
+import 'package:bloc_social_app/BLoC/cubits/profile/profile_cubit.dart';
+import 'package:bloc_social_app/BLoC/cubits/profile/profile_states.dart';
 import 'package:bloc_social_app/data/vos/app_user_vo.dart';
 import 'package:bloc_social_app/utils/navigation_extension.dart';
 import 'package:bloc_social_app/widgets/loading_widget.dart';
