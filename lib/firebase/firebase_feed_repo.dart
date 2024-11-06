@@ -33,10 +33,14 @@ class FirebaseFeedRepo implements FeedRepo {
     try {
       final snapshot =
           await databaseRef.child("feeds").orderByChild('timestamp').once();
-      return snapshot.snapshot.children.map<FeedVO>((snapshot) {
-        return FeedVO.fromJson(
-            Map<String, dynamic>.from(snapshot.value as Map));
-      }).toList();
+      return snapshot.snapshot.children
+          .map<FeedVO>((snapshot) {
+            return FeedVO.fromJson(
+                Map<String, dynamic>.from(snapshot.value as Map));
+          })
+          .toList()
+          .reversed
+          .toList();
     } catch (error) {
       throw Exception("Error fetching feeds: $error");
     }

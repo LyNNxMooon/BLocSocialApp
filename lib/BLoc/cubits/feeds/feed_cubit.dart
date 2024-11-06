@@ -2,6 +2,8 @@ import 'package:bloc_social_app/BLoC/cubits/feeds/feed_states.dart';
 import 'package:bloc_social_app/constants/images.dart';
 import 'package:bloc_social_app/data/vos/feed_vo.dart';
 import 'package:bloc_social_app/domain/feed_repository.dart';
+import 'package:bloc_social_app/utils/navigation_extension.dart';
+import 'package:bloc_social_app/widgets/confirmation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -52,10 +54,22 @@ class FeedCubit extends Cubit<FeedStates> {
 
   //Delete a feed
 
-  Future<void> deleteFeed(int feedId) async {
-    try {
-      feedRepo.deleteFeed(feedId);
-      await fetchAllFeeds();
-    } catch (error) {}
+  Future<void> deleteFeed(int feedId, BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (context) => ConfirmationWidget(
+        message: "Are you sure to delete this post?",
+        function: () async {
+          try {
+            feedRepo.deleteFeed(feedId);
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text("Feed Deleted."),
+            ));
+            context.navigateBack();
+            await fetchAllFeeds();
+          } catch (error) {}
+        },
+      ),
+    );
   }
 }

@@ -1,13 +1,16 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:bloc_social_app/BLoC/cubits/auth/auth_cubit.dart';
 import 'package:bloc_social_app/BLoC/cubits/feeds/feed_cubit.dart';
 import 'package:bloc_social_app/data/vos/feed_vo.dart';
 
 import 'package:bloc_social_app/screens/upload_feed_screen.dart';
+import 'package:bloc_social_app/utils/enums.dart';
 import 'package:bloc_social_app/utils/navigation_extension.dart';
 import 'package:bloc_social_app/widgets/drawer_widget.dart';
 import 'package:bloc_social_app/widgets/feed_avatar_widget.dart';
 import 'package:bloc_social_app/widgets/loading_widget.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,6 +27,7 @@ class FeedScreen extends StatefulWidget {
 
 class _FeedScreenState extends State<FeedScreen> {
   late final feedCubit = context.read<FeedCubit>();
+  late final authCubit = context.read<AuthCubit>();
 
   @override
   void initState() {
@@ -57,7 +61,7 @@ class _FeedScreenState extends State<FeedScreen> {
               );
             } else {
               return Padding(
-                padding: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 20, bottom: 20),
                 child: ListView.separated(
                   itemBuilder: (context, index) =>
                       feedCard(feedState.feeds[index]),
@@ -113,12 +117,23 @@ class _FeedScreenState extends State<FeedScreen> {
                   ),
                 ],
               ),
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.more_horiz,
-                    color: Theme.of(context).colorScheme.primary,
-                  ))
+              PopupMenuButton<Menu>(
+                popUpAnimationStyle: AnimationStyle.noAnimation,
+                icon: const Icon(Icons.more_horiz),
+                onSelected: (Menu item) {
+                  if (item == Menu.delete) {
+                    feedCubit.deleteFeed(feed.id, context);
+                  }
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
+                  if (authCubit.currentUser?.uid == feed.userUID)
+                    menuTile(Icons.edit_note_outlined, "Edit", Menu.edit),
+                  if (authCubit.currentUser?.uid == feed.userUID)
+                    menuTile(
+                        Icons.delete_outline_rounded, "Delete", Menu.delete),
+                  menuTile(CupertinoIcons.share, "Share", Menu.share)
+                ],
+              ),
             ],
           ),
           const Gap(25),
@@ -129,37 +144,44 @@ class _FeedScreenState extends State<FeedScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Icon(Icons.thumb_up_alt_outlined,
-                        size: 18, color: Theme.of(context).colorScheme.primary),
-                    const Gap(5),
-                    Text(
-                      "Like",
-                      style: TextStyle(
-                          fontSize: 13,
-                          color: Theme.of(context).colorScheme.primary),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Icon(Icons.comment_outlined,
-                        size: 18, color: Theme.of(context).colorScheme.primary),
-                    const Gap(5),
-                    Text(
-                      "Comment",
-                      style: TextStyle(
-                          fontSize: 13,
-                          color: Theme.of(context).colorScheme.primary),
-                    )
-                  ],
-                )
+                feedActionWidget(Icons.thumb_up_alt_outlined, "Like"),
+                feedActionWidget(Icons.comment_outlined, "Comment")
               ],
             ),
           )
         ],
       ),
     );
+  }
+
+  Widget feedActionWidget(IconData icon, String title) {
+    return Row(
+      children: [
+        Icon(icon, size: 18, color: Theme.of(context).colorScheme.primary),
+        const Gap(5),
+        Text(
+          title,
+          style: TextStyle(
+              fontSize: 13, color: Theme.of(context).colorScheme.primary),
+        )
+      ],
+    );
+  }
+
+  PopupMenuEntry<Menu> menuTile(
+      IconData icon, String menuName, Menu menuValue) {
+    return PopupMenuItem<Menu>(
+        value: menuValue,
+        child: ListTile(
+          leading: Icon(
+            icon,
+            size: 18,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          title: Text(
+            menuName,
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+          ),
+        ));
   }
 }
